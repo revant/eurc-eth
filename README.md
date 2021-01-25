@@ -143,4 +143,18 @@ Interested in contributing to EURC?
 Code released under the [MIT License](https://github.com/simplicy-io/eurc-eth/blob/master/LICENSE).
 
 
-## [Unit Testing](https://github.com/simplicy-io/eurc-eth/blob/master/UNIT_TESTING.md)
+## Testing and linting
+Running unit test
+```
+npm run test
+```
+
+Running test coverage
+```
+npm run coverage
+```
+
+Lint
+```
+npm run lint
+```
