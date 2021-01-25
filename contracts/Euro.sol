@@ -11,7 +11,7 @@ contract Euro is ERC20Burnable, Ownable {
     event MintFinished();
 
     modifier canMint() {
-        require(!mintingFinished, 'Euro: mint is finished');
+        require(!mintingFinished, "Euro: mint is finished");
         _;
     }
 

@@ -124,6 +124,23 @@ See also [this medium blog](https://medium.com/@kacharlabhargav21/using-ganache-
 ## Add Euro coin to metamask
 Make sure you change your network to Ganache Development in Metamask and read [this blog](https://metamask.zendesk.com/hc/en-us/articles/360015489031-How-to-View-See-Your-Tokens-and-Custom-Tokens-in-Metamask)
 
+
+## Testing and linting
+Running unit test
+```
+npm run test
+```
+
+Running test coverage
+```
+npm run coverage
+```
+
+Lint solidity
+```
+npm run lint:sol
+```
+
 ## Security
 
 If you find a security issue, please join our Discord
@@ -141,20 +158,3 @@ Interested in contributing to EURC?
 
 ## License
 Code released under the [MIT License](https://github.com/simplicy-io/eurc-eth/blob/master/LICENSE).
-
-
-## Testing and linting
-Running unit test
-```
-npm run test
-```
-
-Running test coverage
-```
-npm run coverage
-```
-
-Lint
-```
-npm run lint
-```
