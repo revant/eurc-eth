@@ -57,3 +57,6 @@ allFiredEvents
 # buidler
 cache
 artifacts
+
+# secrets
+secrets.json

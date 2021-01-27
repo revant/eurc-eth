@@ -141,6 +141,34 @@ Lint solidity
 npm run lint:sol
 ```
 
+## Connecting to public test networks
+see also [Connecting to public test networks](https://docs.openzeppelin.com/learn/connecting-to-public-test-networks)
+
+### Create a new account 
+To send transactions in a testnet, you will need a new Ethereum account using mnemonics package
+```
+npx mnemonics
+drama film snack motion ...
+```
+
+### Copy and change secrets
+```
+cp secrets.json.example secrets.json
+```
+
+Copy your mnemonics words to secret.json
+
+### Get Alchemyapi Key and copy your API KEY
+https://www.alchemyapi.io/
+Copy your API KEY to secret.json
+
+### Get funds
+Using [Rinkeby Authenticated Faucet](https://faucet.rinkeby.io/)
+or using [MetaMask’s faucet](https://faucet.metamask.io/)
+
+### Deploy and migrate to rinkeby
+npx truffle migrate --network rinkeby
+
 ## Security
 
 If you find a security issue, please join our Discord
