@@ -1,16 +1,23 @@
 const Web3 = require('web3');
-const { alchemyApiKey, mnemonic, projectId } = require('./secrets.json');
-const rpcURL = `https://eth-kovan.alchemyapi.io/v2/${alchemyApiKey}`;
-
-
-const web3 = new Web3(rpcURL);
-
-// Use BigNumber
-let decimals = web3.utils.toBN(18);
-let amount = web3.utils.toBN(100);
+const EthereumTx = require('ethereumjs-tx').Transaction
+const { alchemyApiKey, mnemonic, projectId, privateKey } = require('./secrets.json');
+//const rpcURL = `https://eth-kovan.alchemyapi.io/v2/${alchemyApiKey}`;
+var web3 = new Web3(new Web3.providers.HttpProvider(`https://eth-kovan.alchemyapi.io/v2/${alchemyApiKey}`))
 
 const owner = "0xdaa3249E3e5Ed1C2C70D73A860D0f2338C353527";
-const euroAddress = "0x9A8b1861eA892F6d90A09e9d2c018778a90025F0";
+const euroAddress = "0xA9549EB9AE5a98EbD8D6d7EC987274fF89BFa832";
+
+let amount = web3.utils.toBN(5);
+
+// get transaction count, later will used as nonce
+web3.eth.getTransactionCount(owner).then(function(v){console.log(v); count = v})  
+
+// get transaction count, later will used as nonce
+let count = web3.eth.getTransactionCount(owner).then(function(v){console.log(v); count = v})  
+
+
+// set your private key here, we'll sign the transaction below
+var newPrivateKey = new Buffer(privateKey, 'hex')   
 
 var contractABI = [
     {
@@ -305,10 +312,10 @@ var contractABI = [
 
 web3.eth.getBalance(owner, (err, wei) => {
     balance = web3.utils.fromWei(wei, 'ether')
-    console.log(balance);
+    console.log('Ether Balance= ' +balance);
 })
 
-var euro = new web3.eth.Contract(contractABI, euroAddress);
+var euro = new web3.eth.Contract(contractABI, euroAddress, {from: owner});
 
 
 euro.methods.name().call(function (err, res) {
@@ -337,3 +344,21 @@ const receiverAddress = "0x821e28109872cad442da8d8335be37d317d4f1e7";
     }
     console.log("The balance of " +owner +" is :", res)
 });
+
+
+var address2 = "0x11B9183206d2a99D5fF3Ac4a9279F0932Ae00CAc";
+
+euro.methods.balanceOf(address2).call(function (err, res) {
+    if (err) {
+      console.log("An error occured", err)
+      return
+    }
+    console.log("The balance of " +address2 +" is :", res)
+});
+
+var rawTransaction = {"from":owner, "gasPrice":web3.utils.toHex(2 * 1e9),"gasLimit":web3.utils.toHex(210000),"to":euroAddress,"value":"0x0","data":euro.methods.transfer(receiverAddress, amount).encodeABI(), "nonce":web3.utils.toHex(count)} 
+
+var transaction = new EthereumTx(rawTransaction, { chain: 'kovan', hardfork: 'constantinople' })
+transaction.sign(newPrivateKey)
+
+web3.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
