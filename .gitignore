@@ -31,6 +31,7 @@ npm-debug.log
 
 # truffle build directory
 build/
+buidler/
 
 # macOS
 .DS_Store
